@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Position;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EmployeeFactory extends Factory
@@ -16,7 +15,6 @@ class EmployeeFactory extends Factory
     public function definition()
     {
         $positions = Position::pluck('id');
-
 
         return [
             'name' => $this->faker->name(),

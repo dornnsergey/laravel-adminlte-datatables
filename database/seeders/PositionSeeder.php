@@ -15,6 +15,6 @@ class PositionSeeder extends Seeder
      */
     public function run()
     {
-        Position::factory(20)->create();
+        Position::factory(250)->create();
     }
 }

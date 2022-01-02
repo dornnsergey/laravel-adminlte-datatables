@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Employee extends Model
 {
@@ -39,7 +40,7 @@ class Employee extends Model
 
     public function getEmploymentAtAttribute($value)
     {
-        return date('d.m.y', strtotime($value));
+        return Carbon::createFromFormat('Y-m-d', $value)->format('d.m.y');
     }
 
     public function getHead()
