@@ -16,102 +16,52 @@ class EmployeeSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Factory::create();
-        $positions = Position::pluck('id');
+        function seedEmployees(
+            int $countLvl1,
+            int $countLvl2 = null,
+            int $countLvl3 = null,
+            int $countLvl4 = null,
+            int $countLvl5 = null
+        ): void
+        {
+            $faker = Factory::create();
+            $positions = Position::pluck('id');
 
-        $level1 = [];
-        for ($i = 0; $i < 100; $i++) {
-            $level1[] = [
-                'name' => $faker->name(),
-                'position_id' => $positions->random(),
-                'employment_at' => $faker->dateTimeBetween('-2 years', '-1 week'),
-                'phone' => $faker->uaPhoneNumber(),
-                'email' => $faker->unique()->safeEmail(),
-                'salary' => rand(1, 500) * 1000,
-                'created_at' => now()->toDateTimeString(),
-                'updated_at' => now()->toDateTimeString()
-            ];
-        }
-        Employee::insert($level1);
-
-
-        $level2 = [];
-        for ($i = 0; $i < 3000; $i++) {
-            $level2[] = [
-                'name' => $faker->name(),
-                'head_id' => rand(1, 100),
-                'position_id' => $positions->random(),
-                'level' => 2,
-                'employment_at' => $faker->dateTimeBetween('-2 years', '-1 week'),
-                'phone' => $faker->uaPhoneNumber(),
-                'email' => $faker->unique()->safeEmail(),
-                'salary' => rand(1, 500) * 1000,
-                'created_at' => now()->toDateTimeString(),
-                'updated_at' => now()->toDateTimeString()
-            ];
-        }
-        Employee::insert($level2);
-
-        $heads2 = collect($level2)->pluck('id');
-        $level3 = [];
-        for ($i = 0; $i < 10000; $i++) {
-            $level3[] = [
-                'name' => $faker->name(),
-                'head_id' => rand(101, 3100),
-                'position_id' => $positions->random(),
-                'level' => 3,
-                'employment_at' => $faker->dateTimeBetween('-2 years', '-1 week'),
-                'phone' => $faker->uaPhoneNumber(),
-                'email' => $faker->unique()->safeEmail(),
-                'salary' => rand(1, 500) * 1000,
-                'created_at' => now()->toDateTimeString(),
-                'updated_at' => now()->toDateTimeString()
-            ];
-        }
-        $chunks = array_chunk($level3, 5000);
-        foreach ($chunks as $chunk) {
-            Employee::insert($chunk);
+            $level = 1;
+            $min = 0;
+            $max = 0;
+            $employees = [];
+            foreach (func_get_args() as $count) {
+                if ($count) {
+                    for ($i = 0; $i < $count; $i++) {
+                        $employees[] = [
+                            'name'          => $faker->name(),
+                            'position_id'   => $positions->random(),
+                            'head_id'       => $level != 1 ? rand($min, $max) : null,
+                            'level'         => $level,
+                            'employment_at' => $faker->dateTimeBetween('-2 years', '-1 week'),
+                            'phone'         => $faker->uaPhoneNumber(),
+                            'email'         => $faker->unique()->safeEmail(),
+                            'salary'        => rand(1, 500) * 1000,
+                            'created_at'    => now()->toDateTimeString(),
+                            'updated_at'    => now()->toDateTimeString()
+                        ];
+                    }
+                }
+                $level++;
+                $min = $max++;
+                $max += $count;
+            }
+            if (count($employees) > 5000) {
+                $chunks = array_chunk($employees, 5000);
+                foreach ($chunks as $chunk) {
+                    Employee::insert($chunk);
+                }
+            } else {
+                Employee::insert($employees);
+            }
         }
 
-
-        $level4 = [];
-        for ($i = 0; $i < 15000; $i++) {
-            $level4[] = [
-                'name' => $faker->name(),
-                'head_id' => rand(3101, 13100),
-                'position_id' => $positions->random(),
-                'level' => 4,
-                'employment_at' => $faker->dateTimeBetween('-2 years', '-1 week'),
-                'phone' => $faker->uaPhoneNumber(),
-                'email' => $faker->unique()->safeEmail(),
-                'salary' => rand(1, 500) * 1000,
-                'created_at' => now()->toDateTimeString(),
-                'updated_at' => now()->toDateTimeString()
-            ];
-        }
-        $chunks = array_chunk($level4, 5000);
-        foreach ($chunks as $chunk) {
-            Employee::insert($chunk);
-        }
-
-        $level5 = [];
-        for ($i = 0; $i < 25000; $i++) {
-            $level5[] = [
-                'name' => $faker->name(),
-                'head_id' => rand(13101, 28100),
-                'position_id' => $positions->random(),
-                'level' => 5,
-                'employment_at' => $faker->dateTimeBetween('-2 years', '-1 week'),
-                'phone' => $faker->uaPhoneNumber(),
-                'email' => $faker->unique()->safeEmail(),
-                'salary' => rand(1, 500) * 1000,
-                'created_at' => now()->toDateTimeString(),
-                'updated_at' => now()->toDateTimeString()
-            ];
-        }
-        $chunks = array_chunk($level5, 5000);
-        foreach ($chunks as $chunk) {
-            Employee::insert($chunk);
-        }
+        seedEmployees(100, 3000, 10000, 15000, 25000);
     }
 }

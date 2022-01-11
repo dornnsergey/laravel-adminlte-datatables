@@ -69,7 +69,7 @@ class Employee extends Model
         }
         $this->saveQuietly();
 
-        if ($this->getSubordinates()) {
+        if ($this->getSubordinates()->isNotEmpty()) {
             foreach ($this->getSubordinates() as $subordinate) {
                 $subordinate->syncSubordinatesLevel();
             }

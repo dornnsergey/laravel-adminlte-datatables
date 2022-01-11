@@ -21,7 +21,7 @@ class EmployeeObserver
         $oldHead = $employee->getOriginal('head_id');
 
         if ($employee->head_id != $oldHead) {
-            if ($employee->getSubordinates()) {
+            if ($employee->getSubordinates()->isNotEmpty()) {
                 foreach ($employee->getSubordinates() as $subordinate) {
                     $subordinate->head_id = $oldHead;
                     $subordinate->syncSubordinatesLevel();
@@ -35,7 +35,7 @@ class EmployeeObserver
     {
         $newHead = $employee->head_id;
 
-        if ($employee->getSubordinates()) {
+        if ($employee->getSubordinates()->isNotEmpty()) {
             foreach ($employee->getSubordinates() as $subordinate) {
                 $subordinate->head_id = $newHead;
                 $subordinate->syncSubordinatesLevel();

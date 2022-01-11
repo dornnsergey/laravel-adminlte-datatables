@@ -57,7 +57,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-lg">
+                        <a href="{{ route('positions.index') }}" class="nav-link text-lg">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
                                 Positions

@@ -10,14 +10,11 @@ use App\Services\EmployeeService;
 use Exception;
 
 
-
 class EmployeeController extends Controller
 {
     public function index()
     {
-        $employees = Employee::all();
-
-        return view('employees.index', compact('employees'));
+        return view('employees.index');
     }
 
     public function create()
@@ -32,13 +29,13 @@ class EmployeeController extends Controller
         try {
             $data = (new EmployeeService())->handleData($request->validated());
         } catch (Exception $e) {
-            return back()->with('error', $e->getMessage())->withInput($request->all());
+            return redirect()->back()->with('error', $e->getMessage())->withInput($request->all());
         }
 
         if (Employee::create($data)) {
             return redirect()->route('employees.index')->with('success', 'New employee has been created.');
         } else {
-           return back()->with('error', 'Employee has not been created. Something went wrong. Please try again.');
+           return redirect()->back()->with('error', 'Employee has not been created. Something went wrong. Please try again.');
         }
     }
 
@@ -55,14 +52,14 @@ class EmployeeController extends Controller
         try {
             $data = (new EmployeeService())->handleData($request->all(), $employee);
         } catch (Exception $e) {
-            return back()->with('error', $e->getMessage())->withInput($request->all());
+            return redirect()->back()->with('error', $e->getMessage())->withInput($request->all());
         }
 
         if ($employee->update($data)) {
             return redirect()->route('employees.index')
-                             ->with('success', 'New employee has been updated.');
+                             ->with('success', 'Employee has been updated.');
         } else {
-            return back()->with('error', 'Employee has not been updated. Something went wrong. Please try again.');
+            return redirect()->back()->with('error', 'Employee has not been updated. Something went wrong. Please try again.');
         }
     }
 

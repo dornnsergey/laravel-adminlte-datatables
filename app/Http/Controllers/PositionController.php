@@ -2,84 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePositionRequest;
+use App\Http\Requests\EditPositionRequest;
 use App\Models\Position;
-use Illuminate\Http\Request;
 
 class PositionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return view('positions.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('positions.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(CreatePositionRequest $request)
     {
-        //
+        Position::create($request->validated());
+
+        return redirect()->route('positions.index')->with('success', 'New position has been created.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Position  $position
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Position $position)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Position  $position
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Position $position)
     {
-        //
+        return view('positions.edit', compact('position'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Position  $position
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Position $position)
+    public function update(EditPositionRequest $request, Position $position)
     {
-        //
+        $position->update($request->validated());
+
+        return redirect()->route('positions.index')->with('success', 'Position has been successfully updated.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Position  $position
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Position $position)
     {
-        //
+        if ($position->employees->count()) {
+            return redirect()->back()->with('error', 'Can not delete. Position belongs to employee(s).');
+        }
+
+        $position->delete();
+
+        return redirect()->route('positions.index')->with('success', 'Position has been deleted.');
     }
 }

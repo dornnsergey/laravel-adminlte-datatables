@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Employee;
 use App\Models\Position;
 use Illuminate\Database\Seeder;
 

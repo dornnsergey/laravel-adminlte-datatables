@@ -30,7 +30,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                    @enderror
+                    @endif
                     <form action="{{ route('employees.update', $employee) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -190,7 +190,8 @@
                             </div>
                         </div>
                         <div class="row justify-content-end mt-5">
-                            <button class="col-3 btn btn-outline-secondary mr-4">Cancel</button>
+                            <a class="col-3 btn btn-outline-secondary mr-4"
+                               href="{{ route('employees.index') }}">Cancel</a>
                             <button class="col-3 btn btn-outline-success" type="submit">Save</button>
                         </div>
                     </form>

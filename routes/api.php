@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\EmployeeController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\PositionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::get('employees', [EmployeeController::class, 'getEmployees'])->name('api.employees.index');
+Route::get('positions', [PositionController::class, 'getPositions'])->name('api.positions.index');
+
 Route::get('head', [EmployeeController::class, 'getHead']);
