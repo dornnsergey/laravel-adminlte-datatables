@@ -16,6 +16,16 @@ class EmployeeSeeder extends Seeder
      */
     public function run()
     {
+        function uaPhoneNumber() {
+            $codes = [50,63,66,67,68,73,91,92,93,94,95,96,97,98,99];
+            $randCod = $codes[rand(0, count($codes)-1)];
+            $part1 = rand(0,9) . rand(0,9) . rand(0,9);
+            $part2 = rand(0,9) . rand(0,9);
+            $part3 = rand(0,9) . rand(0,9);
+
+            return "+380 ($randCod) $part1 $part2 $part3";
+        }
+
         function seedEmployees(
             int $countLvl1,
             int $countLvl2 = null,
@@ -40,7 +50,7 @@ class EmployeeSeeder extends Seeder
                             'head_id'       => $level != 1 ? rand($min, $max) : null,
                             'level'         => $level,
                             'employment_at' => $faker->dateTimeBetween('-2 years', '-1 week'),
-                            'phone'         => $faker->uaPhoneNumber(),
+                            'phone'         => uaPhoneNumber(),
                             'email'         => $faker->unique()->safeEmail(),
                             'salary'        => rand(1, 500) * 1000,
                             'created_at'    => now()->toDateTimeString(),
