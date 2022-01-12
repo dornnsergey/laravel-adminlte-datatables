@@ -63,8 +63,7 @@
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
-                    url: "{{ route('api.employees.index') }}",
-                    headers: {"token": "{{ csrf_token() }}"}
+                    url: "{{ route('api.employees.index', ['token' => csrf_token()]) }}"
                 },
                 "columns": [
                     {data: 'photo', render: function (data, type, row, meta) {

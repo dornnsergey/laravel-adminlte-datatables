@@ -51,7 +51,7 @@ class EmployeeSeeder extends Seeder
                             'level'         => $level,
                             'employment_at' => $faker->dateTimeBetween('-2 years', '-1 week'),
                             'phone'         => uaPhoneNumber(),
-                            'email'         => $faker->unique()->safeEmail(),
+                            'email'         => $faker->unique()->freeEmail(),
                             'salary'        => rand(1, 500) * 1000,
                             'created_at'    => now()->toDateTimeString(),
                             'updated_at'    => now()->toDateTimeString()

@@ -10,9 +10,9 @@ use Yajra\DataTables\Facades\DataTables;
 
 class EmployeeController extends Controller
 {
-    public function getEmployees()
+    public function getEmployees(Request $request)
     {
-        $token = getallheaders()['token'];
+        $token = $request->token;
         $employees = Employee::with('position')->select([
             'id',
             'name',

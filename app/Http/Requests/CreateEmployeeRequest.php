@@ -27,7 +27,7 @@ class CreateEmployeeRequest extends FormRequest
             'photo'         => 'nullable|mimes:jpg,png|max:5120|dimensions:min_width=300,min_height=300',
             'name'          => 'required|min:2|max:256',
             'position_id'   => 'required|exists:positions,id',
-            'head'          => 'required|exists:employees,name',
+            'head'          => 'nullable',
             'employment_at' => 'required|date_format:d.m.y|before_or_equal:today',
             'phone'         => ['required', 'regex:#^\+380 \((50|63|66|67|68|73|9[1-9])\) [\d]{3} [\d]{2} [\d]{2}$#'],
             'email'         => 'required|email:rfc,dns|unique:employees,email',
