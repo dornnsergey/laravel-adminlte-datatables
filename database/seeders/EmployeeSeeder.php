@@ -27,12 +27,12 @@ class EmployeeSeeder extends Seeder
             $faker = Factory::create();
             $positions = Position::pluck('id');
 
-            $level = 1;
-            $min = 0;
-            $max = 0;
             $employees = [];
             foreach (func_get_args() as $count) {
                 if ($count) {
+                    static $level = 1;
+                    static $min = 0;
+                    static $max = 0;
                     for ($i = 0; $i < $count; $i++) {
                         $employees[] = [
                             'name'          => $faker->name(),
@@ -47,10 +47,10 @@ class EmployeeSeeder extends Seeder
                             'updated_at'    => now()->toDateTimeString()
                         ];
                     }
+                    $level++;
+                    $min = $max + 1;
+                    $max += $count;
                 }
-                $level++;
-                $min = $max++;
-                $max += $count;
             }
             if (count($employees) > 5000) {
                 $chunks = array_chunk($employees, 5000);
