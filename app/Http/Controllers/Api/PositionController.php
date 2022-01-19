@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Position;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 
 class PositionController extends Controller
 {
-    public function getPositions()
+    public function getPositions(Request $request)
     {
-        $token = getallheaders()['token'];
+        $token = $request->token;
         $positions = Position::select([
             'id',
             'name',

@@ -14,8 +14,8 @@ class EmployeeController extends Controller
     {
         $token = $request->token;
         $employees = Employee::with('position')->select([
-            'id',
-            'name',
+            'employees.id',
+            'employees.name',
             'position_id',
             'head_id',
             'employment_at',

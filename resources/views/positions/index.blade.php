@@ -66,8 +66,7 @@
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
-                    url: "{{ route('api.positions.index') }}",
-                    headers: {"token": "{{ csrf_token() }}"}
+                    url: "{{ route('api.positions.index', ['token' => csrf_token()]) }}"
                 },
                 "columns": [
                     {data: 'name'},

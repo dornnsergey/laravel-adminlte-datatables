@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="card col-sm-12 border pb-2">
                     <div class="text-lg py-2">Employees list</div>
-                    <table class="table border w-100">
+                    <table class="table table-responsive-md border w-100">
                         <thead>
                         <tr>
                             <th>Photo</th>
