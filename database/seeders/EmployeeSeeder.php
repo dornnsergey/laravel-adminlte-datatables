@@ -39,7 +39,6 @@ class EmployeeSeeder extends Seeder
 
             $employees = [];
             foreach (func_get_args() as $count) {
-                if ($count) {
                     static $level = 1;
                     static $min = 0;
                     static $max = 0;
@@ -60,7 +59,6 @@ class EmployeeSeeder extends Seeder
                     $level++;
                     $min = $max + 1;
                     $max += $count;
-                }
             }
             if (count($employees) > 5000) {
                 $chunks = array_chunk($employees, 5000);
