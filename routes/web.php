@@ -18,6 +18,6 @@ Auth::routes([
 Route::permanentRedirect('/', 'employees');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('employees', EmployeeController::class);
-    Route::resource('positions', PositionController::class);
+    Route::resource('employees', EmployeeController::class)->except('show');
+    Route::resource('positions', PositionController::class)->except('show');
 });
